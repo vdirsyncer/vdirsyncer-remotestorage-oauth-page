@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        .error { color: red; }
+        </style>
+    </head>
+    <body>
+        <script>
+            if(location.hash) {
+                var hash = location.hash.substring(1);
+                var vars = hash.split('&');
+                var token;
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split('=');
+                    if (decodeURIComponent(pair[0]) == "access_token") {
+                        token = decodeURIComponent(pair[1]);
+                    }
+                }
+                if(token) {
+                    document.write("<p>Enter this into your vdirsyncer configuration:</p>");
+                    document.write("<pre>");
+                    document.write("[storage foo]");
+                    document.write("type = remotestorage_...");
+                    document.write("access_token = \"" + token + "\"");
+                    document.write("</pre>");
+                 } else {
+                    document.write("<p class=error>Couldn't find token.</p>");
+                 }
+            } else {
+                document.write("<h1>Nothing to see here.</h1>");
+                document.write("<p><a href=http://vdirsyncer.readthedocs.org/>Move along</a></p>");
+            };
+        </script>
+
+        <hr/>
+        <footer>
+            <small>
+                <p>This page is only used for OAuth. It serves no other purpose.</p>
+                <p>The server never gets to see your credentials.</p>
+            </small>
+        </footer>
+    </body>
+</html>
